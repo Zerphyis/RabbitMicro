@@ -6,10 +6,12 @@ import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
 import dev.Zerphyis.microRabbitMq.Application.services.ProductService;
 import dev.Zerphyis.microRabbitMq.Domain.model.Product;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -44,6 +46,21 @@ public class ProductController {
                 .map(ProductMapper::toResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ProductResponseDto>> getProducts(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+        Page<Product> productsPage = service.getProducts(name, category, minPrice, maxPrice, page, size, sortBy, direction);
+        Page<ProductResponseDto> dtoPage = productsPage.map(ProductMapper::toResponse);
+        return ResponseEntity.ok(dtoPage);
     }
 
     @DeleteMapping("/{id}")
