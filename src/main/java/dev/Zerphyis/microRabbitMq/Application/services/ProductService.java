@@ -17,14 +17,20 @@ import java.util.UUID;
 @Service
 public class ProductService {
     private final ProductRepository repository;
+    private final ProductServiceRabbit rabbitService;
 
-    public ProductService(ProductRepository repository) {
+    public ProductService(ProductRepository repository, ProductServiceRabbit rabbitService) {
         this.repository = repository;
+        this.rabbitService = rabbitService;
     }
 
     public Product create(Product product) {
         validateProduct(product);
-        return repository.save(product);
+        Product saved = repository.save(product);
+
+        rabbitService.sendMenssage("product.created");
+
+        return saved;
     }
 
     public Product getById(UUID id) {
@@ -39,7 +45,10 @@ public class ProductService {
     public void delete(UUID id) {
         Product product = repository.findByid(id)
                 .orElseThrow(() -> new ProductNotFoundException("Produto com id " + id + " não encontrado"));
+
         repository.deleteId(product.getId());
+
+        rabbitService.sendMenssage("product.deleted");
     }
 
     public Page<Product> getProducts(
