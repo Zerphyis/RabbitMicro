@@ -1,5 +1,6 @@
 package dev.Zerphyis.microRabbitMq.Domain.repository;
 
+import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
 import dev.Zerphyis.microRabbitMq.Domain.model.Product;
 import dev.Zerphyis.microRabbitMq.Domain.repository.jpa.ProductRepositoryJpa;
 import dev.Zerphyis.microRabbitMq.Domain.spefication.ProductSpecification;
@@ -15,10 +16,13 @@ import java.util.UUID;
 public class ProductRepositoryImpl implements ProductRepository{
 
     private final ProductRepositoryJpa jpaRepository;
+    private final ProductMapper mapper;
 
-    public ProductRepositoryImpl(ProductRepositoryJpa jpaRepository) {
+    public ProductRepositoryImpl(ProductRepositoryJpa jpaRepository, ProductMapper mapper) {
         this.jpaRepository = jpaRepository;
+        this.mapper = mapper;
     }
+
 
     @Override
     public Product save(Product product) {
