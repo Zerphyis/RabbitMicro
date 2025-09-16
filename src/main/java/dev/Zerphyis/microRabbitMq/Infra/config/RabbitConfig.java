@@ -1,4 +1,4 @@
-package dev.Zerphyis.microRabbitMq.Config;
+package dev.Zerphyis.microRabbitMq.Infra.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
