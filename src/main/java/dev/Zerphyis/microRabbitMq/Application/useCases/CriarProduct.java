@@ -1,0 +1,19 @@
+package dev.Zerphyis.microRabbitMq.Application.useCases;
+
+import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
+import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
+import dev.Zerphyis.microRabbitMq.Domain.model.Product;
+import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepository;
+
+public class CriarProduct {
+    private final ProductRepository productRepository;
+
+    public CriarProduct(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public Product execute(ProductRequestDto dto) {
+        Product product = ProductMapper.toEntity(dto);
+        return productRepository.save(product);
+    }
+}
