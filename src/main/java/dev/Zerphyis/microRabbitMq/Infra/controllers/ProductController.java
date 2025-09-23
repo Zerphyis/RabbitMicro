@@ -2,9 +2,7 @@ package dev.Zerphyis.microRabbitMq.Infra.controllers;
 
 import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
 import dev.Zerphyis.microRabbitMq.Application.dto.ProductResponseDto;
-import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
 import dev.Zerphyis.microRabbitMq.Application.services.ProductService;
-import dev.Zerphyis.microRabbitMq.Domain.model.Product;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products")
@@ -28,24 +25,18 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponseDto> create(@Valid @RequestBody ProductRequestDto dto) {
-        Product product = ProductMapper.toEntity(dto);
-        Product saved = service.create(product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ProductMapper.toResponse(saved));
+        ProductResponseDto response = service.create(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDto> getById(@PathVariable UUID id) {
-        Product product = service.getById(id);
-        return ResponseEntity.ok(ProductMapper.toResponse(product));
+        return ResponseEntity.ok(service.getById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<ProductResponseDto>> getAll() {
-        List<ProductResponseDto> products = service.getAll()
-                .stream()
-                .map(ProductMapper::toResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(products);
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/filtro")
@@ -58,8 +49,10 @@ public class ProductController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "name") String sortBy,
             @RequestParam(defaultValue = "asc") String direction) {
-        Page<Product> productsPage = service.getProducts(name, category, minPrice, maxPrice, page, size, sortBy, direction);
-        Page<ProductResponseDto> dtoPage = productsPage.map(ProductMapper::toResponse);
+
+        Page<ProductResponseDto> dtoPage =
+                service.getProducts(name, category, minPrice, maxPrice, page, size, sortBy, direction);
+
         return ResponseEntity.ok(dtoPage);
     }
 
