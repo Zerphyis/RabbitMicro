@@ -1,10 +1,7 @@
 package dev.Zerphyis.microRabbitMq.Infra.config;
 
 import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
-import dev.Zerphyis.microRabbitMq.Application.useCases.AtualizarProduct;
-import dev.Zerphyis.microRabbitMq.Application.useCases.CriarProduct;
-import dev.Zerphyis.microRabbitMq.Application.useCases.DeletarProduct;
-import dev.Zerphyis.microRabbitMq.Application.useCases.ListarProduct;
+import dev.Zerphyis.microRabbitMq.Application.useCases.*;
 import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepository;
 import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepositoryImpl;
 import dev.Zerphyis.microRabbitMq.Domain.repository.jpa.ProductRepositoryJpa;
@@ -13,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ProductConfig {
+
     @Bean
     public CriarProduct criarProduct(ProductRepository productRepository) {
         return new CriarProduct(productRepository);
@@ -34,13 +32,23 @@ public class ProductConfig {
     }
 
     @Bean
+    public GetProduct getProduct(ProductRepository productRepository) {
+        return new GetProduct(productRepository);
+    }
+
+    @Bean
+    public FilterGetProduct filterGetProduct(ProductRepository productRepository) {
+        return new FilterGetProduct(productRepository);
+    }
+
+    @Bean
     public ProductMapper productMapper() {
         return new ProductMapper();
     }
 
     @Bean
-    public ProductRepository productRepository(ProductRepositoryJpa productRepositoryJpa, ProductMapper productMapper) {
+    public ProductRepository productRepository(ProductRepositoryJpa productRepositoryJpa,
+                                               ProductMapper productMapper) {
         return new ProductRepositoryImpl(productRepositoryJpa, productMapper);
     }
-
 }
