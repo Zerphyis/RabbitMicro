@@ -1,5 +1,6 @@
 package dev.Zerphyis.microRabbitMq.Application.dto;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,12 +17,13 @@ public class ProductRequestDto {
     private String description;
 
     @NotNull(message = "O preço é obrigatório.")
-    @Min(value = 0, message = "O preço deve ser maior ou igual a 0.")
+    @DecimalMin(value = "0.0", inclusive = true, message = "O preço deve ser maior ou igual a 0.")
     private BigDecimal price;
 
     @NotNull(message = "O estoque é obrigatório.")
     @Min(value = 0, message = "O estoque deve ser maior ou igual a 0.")
     private Integer stock;
+
 
     @NotBlank(message = "A categoria é obrigatória.")
     private String category;
