@@ -30,4 +30,15 @@ public class ProductMapper {
                 .updateAt(product.getUpdatedAt())
                 .build();
     }
+    public static ProductRequestDto toRequestDto(Product product) {
+        if (product == null) return null;
+
+        ProductRequestDto dto = new ProductRequestDto();
+        dto.setName(product.getName());
+        dto.setDescription(product.getDescription());
+        dto.setPrice(product.getPrice());
+        dto.setStock(product.getStock());
+        dto.setCategory(product.getCategory());
+        return dto;
+    }
 }
