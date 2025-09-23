@@ -48,7 +48,7 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping
+    @GetMapping("/filtro")
     public ResponseEntity<Page<ProductResponseDto>> getProducts(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,

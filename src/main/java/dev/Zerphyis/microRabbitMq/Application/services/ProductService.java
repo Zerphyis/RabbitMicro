@@ -3,6 +3,7 @@ package dev.Zerphyis.microRabbitMq.Application.services;
 
 import dev.Zerphyis.microRabbitMq.Domain.model.Product;
 import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepository;
+import dev.Zerphyis.microRabbitMq.Domain.spefication.ProductSpecification;
 import dev.Zerphyis.microRabbitMq.Infra.exceptions.InvalidOperationException;
 import dev.Zerphyis.microRabbitMq.Infra.exceptions.ProductNotFoundException;
 import org.springframework.data.domain.Page;
@@ -60,8 +61,20 @@ public class ProductService {
             int size,
             String sortBy,
             String direction) {
-        Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
+
+        String sortField = (sortBy == null || sortBy.isBlank()) ? "name" : sortBy;
+        Sort.Direction sortDirection;
+        try {
+            sortDirection = (direction == null || direction.isBlank())
+                    ? Sort.Direction.ASC
+                    : Sort.Direction.fromString(direction);
+        } catch (IllegalArgumentException e) {
+            sortDirection = Sort.Direction.ASC;
+        }
+
+        Sort sort = Sort.by(sortDirection, sortField);
         PageRequest pageRequest = PageRequest.of(page, size, sort);
+
         return repository.findAllWithFilters(name, category, minPrice, maxPrice, pageRequest);
     }
 
