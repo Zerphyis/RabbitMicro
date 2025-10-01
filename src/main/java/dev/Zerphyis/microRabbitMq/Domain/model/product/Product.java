@@ -1,4 +1,4 @@
-package dev.Zerphyis.microRabbitMq.Domain.model;
+package dev.Zerphyis.microRabbitMq.Domain.model.product;
 
 import jakarta.persistence.*;
 import lombok.*;

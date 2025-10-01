@@ -4,7 +4,7 @@ import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
 import dev.Zerphyis.microRabbitMq.Application.dto.ProductResponseDto;
 import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
 import dev.Zerphyis.microRabbitMq.Application.useCases.*;
-import dev.Zerphyis.microRabbitMq.Domain.model.Product;
+import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;

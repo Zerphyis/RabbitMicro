@@ -1,6 +1,6 @@
 package dev.Zerphyis.microRabbitMq.Application.useCases;
 
-import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepository;
+import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepository;
 
 import java.util.UUID;
 

@@ -2,9 +2,9 @@ package dev.Zerphyis.microRabbitMq.Infra.config;
 
 import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
 import dev.Zerphyis.microRabbitMq.Application.useCases.*;
-import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepository;
-import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepositoryImpl;
-import dev.Zerphyis.microRabbitMq.Domain.repository.jpa.ProductRepositoryJpa;
+import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepository;
+import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepositoryImpl;
+import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.jpa.ProductRepositoryJpa;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

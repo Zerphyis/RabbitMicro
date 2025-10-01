@@ -1,8 +1,8 @@
-package dev.Zerphyis.microRabbitMq.Domain.repository;
+package dev.Zerphyis.microRabbitMq.Domain.repository.productRepository;
 
 import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
-import dev.Zerphyis.microRabbitMq.Domain.model.Product;
-import dev.Zerphyis.microRabbitMq.Domain.repository.jpa.ProductRepositoryJpa;
+import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
+import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.jpa.ProductRepositoryJpa;
 import dev.Zerphyis.microRabbitMq.Domain.spefication.ProductSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
