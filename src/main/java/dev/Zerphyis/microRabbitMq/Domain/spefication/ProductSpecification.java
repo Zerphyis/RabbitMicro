@@ -1,6 +1,6 @@
 package dev.Zerphyis.microRabbitMq.Domain.spefication;
 
-import dev.Zerphyis.microRabbitMq.Domain.model.Product;
+import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
