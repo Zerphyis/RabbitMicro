@@ -1,11 +1,10 @@
 package dev.Zerphyis.microRabbitMq.Application.useCases;
 
-import dev.Zerphyis.microRabbitMq.Domain.model.Product;
-import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepository;
+import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
+import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
