@@ -2,7 +2,7 @@ package dev.Zerphyis.microRabbitMq.Application.mapper;
 
 import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
 import dev.Zerphyis.microRabbitMq.Application.dto.ProductResponseDto;
-import dev.Zerphyis.microRabbitMq.Domain.model.Product;
+import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 
 public class ProductMapper {
     public static Product toEntity(ProductRequestDto dto) {
