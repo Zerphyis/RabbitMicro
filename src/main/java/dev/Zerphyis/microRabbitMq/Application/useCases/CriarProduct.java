@@ -2,8 +2,8 @@ package dev.Zerphyis.microRabbitMq.Application.useCases;
 
 import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
 import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
-import dev.Zerphyis.microRabbitMq.Domain.model.Product;
-import dev.Zerphyis.microRabbitMq.Domain.repository.ProductRepository;
+import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
+import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepository;
 
 public class CriarProduct {
     private final ProductRepository productRepository;
