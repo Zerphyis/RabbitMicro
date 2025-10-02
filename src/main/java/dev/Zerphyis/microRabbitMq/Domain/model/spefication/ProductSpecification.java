@@ -1,4 +1,4 @@
-package dev.Zerphyis.microRabbitMq.Domain.spefication;
+package dev.Zerphyis.microRabbitMq.Domain.model.spefication;
 
 import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 import jakarta.persistence.criteria.Predicate;

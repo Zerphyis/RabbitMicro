@@ -1,7 +1,7 @@
-package dev.Zerphyis.microRabbitMq.Application.mapper;
+package dev.Zerphyis.microRabbitMq.Application.mapper.product;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductResponseDto;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductResponseDto;
 import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 
 public class ProductMapper {

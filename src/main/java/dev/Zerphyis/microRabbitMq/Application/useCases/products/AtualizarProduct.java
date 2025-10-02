@@ -1,6 +1,6 @@
-package dev.Zerphyis.microRabbitMq.Application.useCases;
+package dev.Zerphyis.microRabbitMq.Application.useCases.products;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
 import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepository;
 

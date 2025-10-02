@@ -1,7 +1,7 @@
 package dev.Zerphyis.microRabbitMq.Infra.controllers;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
-import dev.Zerphyis.microRabbitMq.Application.services.ProductServiceRabbit;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
+import dev.Zerphyis.microRabbitMq.Application.services.product.ProductServiceRabbit;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

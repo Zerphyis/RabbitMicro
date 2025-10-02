@@ -1,7 +1,7 @@
-package dev.Zerphyis.microRabbitMq.Application.useCases;
+package dev.Zerphyis.microRabbitMq.Application.useCases.products;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductResponseDto;
-import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductResponseDto;
+import dev.Zerphyis.microRabbitMq.Application.mapper.product.ProductMapper;
 import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepository;
 
 import java.util.List;

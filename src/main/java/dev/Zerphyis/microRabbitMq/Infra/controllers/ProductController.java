@@ -1,8 +1,8 @@
 package dev.Zerphyis.microRabbitMq.Infra.controllers;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductResponseDto;
-import dev.Zerphyis.microRabbitMq.Application.services.ProductService;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductResponseDto;
+import dev.Zerphyis.microRabbitMq.Application.services.product.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

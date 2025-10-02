@@ -1,4 +1,4 @@
-package dev.Zerphyis.microRabbitMq.Application.dto;
+package dev.Zerphyis.microRabbitMq.Application.dto.product;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
