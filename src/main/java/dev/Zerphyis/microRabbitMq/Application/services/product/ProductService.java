@@ -1,9 +1,9 @@
-package dev.Zerphyis.microRabbitMq.Application.services;
+package dev.Zerphyis.microRabbitMq.Application.services.product;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductResponseDto;
-import dev.Zerphyis.microRabbitMq.Application.mapper.ProductMapper;
-import dev.Zerphyis.microRabbitMq.Application.useCases.*;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductResponseDto;
+import dev.Zerphyis.microRabbitMq.Application.mapper.product.ProductMapper;
+import dev.Zerphyis.microRabbitMq.Application.useCases.products.*;
 import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
