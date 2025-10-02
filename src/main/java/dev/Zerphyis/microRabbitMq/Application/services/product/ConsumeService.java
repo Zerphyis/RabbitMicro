@@ -1,6 +1,6 @@
-package dev.Zerphyis.microRabbitMq.Application.services;
+package dev.Zerphyis.microRabbitMq.Application.services.product;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.ProductRequestDto;
+import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
