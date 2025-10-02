@@ -1,4 +1,4 @@
-package dev.Zerphyis.microRabbitMq.Application.services;
+package dev.Zerphyis.microRabbitMq.Application.services.product;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
