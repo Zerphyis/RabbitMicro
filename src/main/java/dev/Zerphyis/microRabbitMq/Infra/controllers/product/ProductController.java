@@ -1,4 +1,4 @@
-package dev.Zerphyis.microRabbitMq.Infra.controllers;
+package dev.Zerphyis.microRabbitMq.Infra.controllers.product;
 
 import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
 import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductResponseDto;
