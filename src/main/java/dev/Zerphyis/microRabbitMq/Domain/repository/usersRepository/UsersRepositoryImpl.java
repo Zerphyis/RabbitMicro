@@ -2,7 +2,9 @@ package dev.Zerphyis.microRabbitMq.Domain.repository.usersRepository;
 
 import dev.Zerphyis.microRabbitMq.Domain.model.users.Users;
 import dev.Zerphyis.microRabbitMq.Domain.repository.usersRepository.jpa.UsersRepositoryJpa;
+import org.apache.catalina.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UsersRepositoryImpl implements UserRepository {
@@ -31,5 +33,9 @@ public class UsersRepositoryImpl implements UserRepository {
     @Override
     public void deleteById(Long id) {
         usersRepositoryJpa.deleteById(id);
+    }
+    @Override
+    public List<Users> findByNameContainingIgnoreCase(String name) {
+        return usersRepositoryJpa.findByNameContainingIgnoreCase(name);
     }
 }
