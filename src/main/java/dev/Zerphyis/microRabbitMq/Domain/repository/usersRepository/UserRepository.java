@@ -1,7 +1,7 @@
 package dev.Zerphyis.microRabbitMq.Domain.repository.usersRepository;
 
 import dev.Zerphyis.microRabbitMq.Domain.model.users.Users;
-
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
@@ -9,4 +9,5 @@ public interface UserRepository {
     Users save(Users user);
     Optional<Users> findById(Long id);
     void deleteById(Long id);
+    List<Users> findByNameContainingIgnoreCase(String name);
 }
