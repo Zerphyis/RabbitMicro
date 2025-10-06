@@ -1,14 +1,15 @@
 package dev.Zerphyis.microRabbitMq.Domain.model.users;
 
+import dev.Zerphyis.microRabbitMq.Domain.model.users.typeRole.TypeRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "usuarios")
 public class Users implements UserDetails {
@@ -36,10 +38,33 @@ public class Users implements UserDetails {
     @Column(name = "senha")
     private String password;
 
+    @Builder.Default
+    private boolean active = true;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    @Column(name = "role", nullable = false)
+    private TypeRole role;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of((new SimpleGrantedAuthority("ROLE_" + role.name())));
     }
+
+    @PrePersist
+    public void onCreate(){
+        this.createdAt=LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate(){
+        this.updatedAt=LocalDateTime.now();
+    }
+
 
     @Override
     public String getPassword() {
@@ -48,7 +73,7 @@ public class Users implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return email;
     }
 
     @Override
