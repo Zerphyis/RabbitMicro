@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FindUsersUseCase {
+
     private final UserRepository repository;
 
     public FindUsersUseCase(UserRepository repository) {
@@ -21,7 +22,6 @@ public class FindUsersUseCase {
                 .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
 
         return new UserResponseDto(user.getName(), user.getEmail());
-
     }
 
     public List<UserResponseDto> byName(String name) {
@@ -30,5 +30,11 @@ public class FindUsersUseCase {
                 .filter(Users::isActive)
                 .map(u -> new UserResponseDto(u.getName(), u.getEmail()))
                 .collect(Collectors.toList());
+    }
+
+    public Users byEmail(String email) {
+        return repository.findByEmail(email)
+                .filter(Users::isActive)
+                .orElse(null);
     }
 }
