@@ -14,12 +14,9 @@ public class RegisterUsersUseCase {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
     public UserResponseDto execute(UsersRegisterDto registerDto) {
         userRepository.findByEmail(registerDto.getEmail())
-                .ifPresent(u -> {
-                    throw new IllegalArgumentException("E-mail já cadastrado");
-                });
+                .ifPresent(u -> { throw new IllegalArgumentException("E-mail já cadastrado"); });
 
         Users user = Users.builder()
                 .name(registerDto.getName())
