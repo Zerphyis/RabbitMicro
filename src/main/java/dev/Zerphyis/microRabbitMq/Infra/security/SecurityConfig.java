@@ -1,6 +1,5 @@
 package dev.Zerphyis.microRabbitMq.Infra.security;
 
-import dev.Zerphyis.microRabbitMq.Application.services.user.UserService;
 import dev.Zerphyis.microRabbitMq.Application.useCases.users.LogoutUserUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,36 +17,33 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final LogoutUserUseCase logoutUserUseCase;
-    private final UserService userService;
 
     public SecurityConfig(JwtTokenProvider jwtTokenProvider,
-                          LogoutUserUseCase logoutUserUseCase,
-                          UserService userService) {
+                          LogoutUserUseCase logoutUserUseCase) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.logoutUserUseCase = logoutUserUseCase;
-        this.userService = userService;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   FilterSecurity filterSecurity) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-
                         .requestMatchers("/api/users/**/search").hasRole("ADMIN")
                         .requestMatchers("/api/users/{id}").hasRole("ADMIN")
-                        .requestMatchers("/api/users/{id}").hasRole("ADMIN")
-
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(
-                        new FilterSecurity(jwtTokenProvider, logoutUserUseCase, userService),
-                        UsernamePasswordAuthenticationFilter.class
-                );
+                .addFilterBefore(filterSecurity, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public FilterSecurity filterSecurity(dev.Zerphyis.microRabbitMq.Application.services.user.UserService userService) {
+        return new FilterSecurity(jwtTokenProvider, logoutUserUseCase, userService);
     }
 
     @Bean
