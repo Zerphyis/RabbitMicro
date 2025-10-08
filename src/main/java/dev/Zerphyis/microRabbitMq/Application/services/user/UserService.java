@@ -26,8 +26,13 @@ public class UserService implements UserDetailsService {
     private final DeactiveUserUseCase deactive;
     private final UserMapper mapper;
 
-    public UserService(RegisterUsersUseCase register, LoginUserUseCase login, LogoutUserUseCase logout,
-                       FindUsersUseCase findUser, UpdateUsersUseCase update, DeactiveUserUseCase deactive, UserMapper mapper) {
+    public UserService(RegisterUsersUseCase register,
+                       LoginUserUseCase login,
+                       LogoutUserUseCase logout,
+                       FindUsersUseCase findUser,
+                       UpdateUsersUseCase update,
+                       DeactiveUserUseCase deactive,
+                       UserMapper mapper) {
         this.register = register;
         this.login = login;
         this.logout = logout;
@@ -44,6 +49,7 @@ public class UserService implements UserDetailsService {
     public String login(UserLoginDto dto) {
         return login.execute(dto).getToken();
     }
+
     public void logout(String token) {
         UserLogoutDto logoutDto = new UserLogoutDto();
         logoutDto.setToken(token);
