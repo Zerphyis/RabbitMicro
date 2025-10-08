@@ -2,11 +2,11 @@ package dev.Zerphyis.microRabbitMq.Domain.repository.usersRepository;
 
 import dev.Zerphyis.microRabbitMq.Domain.model.users.Users;
 import dev.Zerphyis.microRabbitMq.Domain.repository.usersRepository.jpa.UsersRepositoryJpa;
-import org.apache.catalina.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public class UsersRepositoryImpl implements UserRepository {
 
     private final UsersRepositoryJpa usersRepositoryJpa;
