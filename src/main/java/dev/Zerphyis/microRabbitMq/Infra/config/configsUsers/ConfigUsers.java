@@ -1,11 +1,14 @@
 package dev.Zerphyis.microRabbitMq.Infra.config.configsUsers;
 
+import dev.Zerphyis.microRabbitMq.Application.mapper.user.UserMapper;
+import dev.Zerphyis.microRabbitMq.Application.services.user.UserService;
 import dev.Zerphyis.microRabbitMq.Application.useCases.users.*;
 import dev.Zerphyis.microRabbitMq.Domain.repository.usersRepository.UserRepository;
 import dev.Zerphyis.microRabbitMq.Infra.security.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -13,11 +16,11 @@ public class ConfigUsers {
 
     @Bean
     public RegisterUsersUseCase registerUsersUseCase(UserRepository repository, PasswordEncoder encoder){
-        return  new RegisterUsersUseCase(repository,encoder);
+        return new RegisterUsersUseCase(repository, encoder);
     }
+
     @Bean
-    public LoginUserUseCase loginUserUseCase(AuthenticationManager authManager,
-                                             JwtTokenProvider jwtTokenProvider) {
+    public LoginUserUseCase loginUserUseCase(AuthenticationManager authManager, JwtTokenProvider jwtTokenProvider) {
         return new LoginUserUseCase(authManager, jwtTokenProvider);
     }
 
@@ -39,5 +42,34 @@ public class ConfigUsers {
     @Bean
     public DeactiveUserUseCase deactivateUserUseCase(UserRepository repository) {
         return new DeactiveUserUseCase(repository);
+    }
+
+    @Bean
+    public UserMapper userMapper() {
+        return new UserMapper();
+    }
+
+    @Bean
+    public UserService userService(RegisterUsersUseCase registerUsersUseCase,
+                                   LoginUserUseCase loginUserUseCase,
+                                   LogoutUserUseCase logoutUserUseCase,
+                                   FindUsersUseCase findUserUseCase,
+                                   UpdateUsersUseCase updateUserUseCase,
+                                   DeactiveUserUseCase deactivateUserUseCase,
+                                   UserMapper userMapper) {
+        return new UserService(
+                registerUsersUseCase,
+                loginUserUseCase,
+                logoutUserUseCase,
+                findUserUseCase,
+                updateUserUseCase,
+                deactivateUserUseCase,
+                userMapper
+        );
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserService userService) {
+        return userService;
     }
 }
