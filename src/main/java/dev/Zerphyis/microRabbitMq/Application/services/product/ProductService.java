@@ -5,6 +5,9 @@ import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductResponseDto;
 import dev.Zerphyis.microRabbitMq.Application.mapper.product.ProductMapper;
 import dev.Zerphyis.microRabbitMq.Application.useCases.products.*;
 import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -41,21 +44,26 @@ public class ProductService {
         this.atualizarProduct = atualizarProduct;
     }
 
+    @CacheEvict(value = {"products","product"},allEntries = true)
     public ProductResponseDto create(ProductRequestDto dto) {
         Product saved = createProduct.execute(dto);
         return ProductMapper.toResponse(saved);
     }
-
+    @Cacheable(value = "product", key = "#id")
     public ProductResponseDto getById(UUID id) {
         return ProductMapper.toResponse(getProductById.getById(id));
     }
 
+    @Cacheable(value = "products_all")
     public List<ProductResponseDto> getAll() {
         return getAllProducts.execute();
     }
-    public void delete(UUID id) {
-        deleteProduct.execute(id);
-    }
+
+
+    @Cacheable(
+            value = "products",
+            key = "T(String).format('%s_%s_%s_%s_%s_%s_%s', #name, #category, #minPrice, #maxPrice, #page, #size, #sortBy)"
+    )
 
     public Page<ProductResponseDto> getProducts(
             String name,
@@ -74,12 +82,15 @@ public class ProductService {
         return new PageImpl<>(dtoList, products.getPageable(), products.getTotalElements());
     }
 
+    @CachePut(value = "product",key = "#id")
+    @CacheEvict(value = {"products","products_all"},allEntries = true )
     public Optional<ProductResponseDto> update(UUID id, ProductRequestDto dto) {
         return atualizarProduct.execute(id, dto).map(ProductMapper::toResponse);
     }
 
-    public Optional<ProductResponseDto> update(UUID id, Product product) {
-        ProductRequestDto dto = ProductMapper.toRequestDto(product);
-        return atualizarProduct.execute(id, dto).map(ProductMapper::toResponse);
+
+    public void delete(UUID id) {
+        deleteProduct.execute(id);
     }
+
 }
