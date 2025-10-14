@@ -1,6 +1,7 @@
 package dev.Zerphyis.microRabbitMq.Infra.security;
 
 import dev.Zerphyis.microRabbitMq.Application.useCases.users.LogoutUserUseCase;
+import dev.Zerphyis.microRabbitMq.Application.services.user.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/**/search").hasRole("ADMIN")
-                        .requestMatchers("/api/users/{id}").hasRole("ADMIN")
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+                        .requestMatchers("/producer/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(filterSecurity, UsernamePasswordAuthenticationFilter.class);
@@ -42,7 +44,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public FilterSecurity filterSecurity(dev.Zerphyis.microRabbitMq.Application.services.user.UserService userService) {
+    public FilterSecurity filterSecurity(UserService userService) {
         return new FilterSecurity(jwtTokenProvider, logoutUserUseCase, userService);
     }
 
