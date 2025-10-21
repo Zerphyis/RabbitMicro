@@ -1,9 +1,6 @@
 package dev.Zerphyis.microRabbitMq.Application.services.user;
 
-import dev.Zerphyis.microRabbitMq.Application.dto.users.UserLoginDto;
-import dev.Zerphyis.microRabbitMq.Application.dto.users.UserLogoutDto;
-import dev.Zerphyis.microRabbitMq.Application.dto.users.UserResponseDto;
-import dev.Zerphyis.microRabbitMq.Application.dto.users.UsersRegisterDto;
+import dev.Zerphyis.microRabbitMq.Application.dto.users.*;
 import dev.Zerphyis.microRabbitMq.Application.mapper.user.UserMapper;
 import dev.Zerphyis.microRabbitMq.Application.useCases.users.*;
 import dev.Zerphyis.microRabbitMq.Domain.model.users.Users;
@@ -45,12 +42,10 @@ public class UserService implements UserDetailsService {
         this.mapper = mapper;
     }
 
-
-@CacheEvict(value = {"users","user"},allEntries = true)
+    @CacheEvict(value = {"users","user"}, allEntries = true)
     public UserResponseDto register(UsersRegisterDto dto) {
         return register.execute(dto);
     }
-
 
     public String login(UserLoginDto dto) {
         return login.execute(dto).getToken();
