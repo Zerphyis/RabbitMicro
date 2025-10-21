@@ -7,12 +7,16 @@ import dev.Zerphyis.microRabbitMq.Domain.repository.usersRepository.UserReposito
 import dev.Zerphyis.microRabbitMq.Infra.security.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ConfigUsers {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public RegisterUsersUseCase registerUsersUseCase(UserRepository repository, PasswordEncoder encoder){
@@ -20,8 +24,8 @@ public class ConfigUsers {
     }
 
     @Bean
-    public LoginUserUseCase loginUserUseCase(AuthenticationManager authManager, JwtTokenProvider jwtTokenProvider) {
-        return new LoginUserUseCase(authManager, jwtTokenProvider);
+    public LoginUserUseCase loginUserUseCase(JwtTokenProvider jwtTokenProvider) {
+        return new LoginUserUseCase(jwtTokenProvider);
     }
 
     @Bean
@@ -66,10 +70,5 @@ public class ConfigUsers {
                 deactivateUserUseCase,
                 userMapper
         );
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(UserService userService) {
-        return userService;
     }
 }
