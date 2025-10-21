@@ -1,9 +1,14 @@
 package dev.Zerphyis.microRabbitMq.Domain.model.users.typeRole;
 
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-@Table(name = "permissoes")
 public enum TypeRole {
     ADMIN,
-    CLIENT
+    CLIENT;
+
+    @JsonCreator
+    public static TypeRole fromString(String value) {
+        if (value == null) return null;
+        return TypeRole.valueOf(value.toUpperCase());
+    }
 }
