@@ -32,6 +32,15 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    private FilterSecurity jwtAuthenticationFilter() {
+        return new FilterSecurity(jwtTokenProvider, logoutUserUseCase, userService);
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
         loginUserUseCase.setAuthenticationManager(authManager);
 
@@ -40,24 +49,13 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-                        .requestMatchers("/producer/**").permitAll()
-                        .requestMatchers("/api/users/search").hasRole("ADMIN")
+                        .requestMatchers("/api/users/logout").authenticated()
                         .requestMatchers("/api/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userService)
-                .addFilterBefore(filterSecurity(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    @Bean
-    public FilterSecurity filterSecurity() {
-        return new FilterSecurity(jwtTokenProvider, logoutUserUseCase, userService);
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
     }
 }
