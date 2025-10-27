@@ -3,6 +3,7 @@ package dev.Zerphyis.microRabbitMq.Application.services.product;
 import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductRequestDto;
 import dev.Zerphyis.microRabbitMq.Application.dto.product.ProductResponseDto;
 import dev.Zerphyis.microRabbitMq.Application.mapper.product.ProductMapper;
+import dev.Zerphyis.microRabbitMq.Application.services.email.EmailProducerService;
 import dev.Zerphyis.microRabbitMq.Application.useCases.products.*;
 import dev.Zerphyis.microRabbitMq.Domain.model.product.Product;
 import org.springframework.cache.annotation.CacheEvict;
@@ -27,6 +28,7 @@ public class ProductService {
     private final DeletarProduct deleteProduct;
     private final FilterGetProduct filterGetProduct;
     private final AtualizarProduct atualizarProduct;
+    private final EmailProducerService emailProducerService;
 
     public ProductService(
             CriarProduct createProduct,
@@ -34,7 +36,8 @@ public class ProductService {
             ListarProduct getAllProducts,
             DeletarProduct deleteProduct,
             FilterGetProduct filterGetProduct,
-            AtualizarProduct atualizarProduct
+            AtualizarProduct atualizarProduct,
+            EmailProducerService emailProducerService
     ) {
         this.createProduct = createProduct;
         this.getProductById = getProductById;
@@ -42,13 +45,33 @@ public class ProductService {
         this.deleteProduct = deleteProduct;
         this.filterGetProduct = filterGetProduct;
         this.atualizarProduct = atualizarProduct;
+        this.emailProducerService = emailProducerService;
     }
 
-    @CacheEvict(value = {"products","product"},allEntries = true)
+    @CacheEvict(value = {"products", "product"}, allEntries = true)
     public ProductResponseDto create(ProductRequestDto dto) {
         Product saved = createProduct.execute(dto);
-        return ProductMapper.toResponse(saved);
+        ProductResponseDto response = ProductMapper.toResponse(saved);
+
+        String subject = "Produto cadastrado com sucesso!";
+        String body = String.format("""
+                Olá! 👋
+
+                Seu produto "%s" foi cadastrado com sucesso!
+
+                Descrição: %s
+                Preço: %s
+                Estoque: %d
+                Categoria: %s
+
+                Obrigado por usar nosso sistema!
+                """, dto.getName(), dto.getDescription(), dto.getPrice(), dto.getStock(), dto.getCategory());
+
+        emailProducerService.sendEmailToLoggedUser(subject, body);
+
+        return response;
     }
+
     @Cacheable(value = "product", key = "#id")
     public ProductResponseDto getById(UUID id) {
         return ProductMapper.toResponse(getProductById.getById(id));
@@ -59,12 +82,10 @@ public class ProductService {
         return getAllProducts.execute();
     }
 
-
     @Cacheable(
             value = "products",
             key = "T(String).format('%s_%s_%s_%s_%s_%s_%s', #name, #category, #minPrice, #maxPrice, #page, #size, #sortBy)"
     )
-
     public Page<ProductResponseDto> getProducts(
             String name,
             String category,
@@ -82,15 +103,13 @@ public class ProductService {
         return new PageImpl<>(dtoList, products.getPageable(), products.getTotalElements());
     }
 
-    @CachePut(value = "product",key = "#id")
-    @CacheEvict(value = {"products","products_all"},allEntries = true )
+    @CachePut(value = "product", key = "#id")
+    @CacheEvict(value = {"products", "products_all"}, allEntries = true)
     public Optional<ProductResponseDto> update(UUID id, ProductRequestDto dto) {
         return atualizarProduct.execute(id, dto).map(ProductMapper::toResponse);
     }
 
-
     public void delete(UUID id) {
         deleteProduct.execute(id);
     }
-
 }
