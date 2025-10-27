@@ -1,6 +1,8 @@
 package dev.Zerphyis.microRabbitMq.Infra.config.configsProduct;
 
 import dev.Zerphyis.microRabbitMq.Application.mapper.product.ProductMapper;
+import dev.Zerphyis.microRabbitMq.Application.services.email.EmailProducerService;
+import dev.Zerphyis.microRabbitMq.Application.services.product.ProductServiceRabbit;
 import dev.Zerphyis.microRabbitMq.Application.useCases.products.*;
 import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepository;
 import dev.Zerphyis.microRabbitMq.Domain.repository.productRepository.ProductRepositoryImpl;
@@ -50,5 +52,10 @@ public class ProductConfig {
     public ProductRepository productRepository(ProductRepositoryJpa productRepositoryJpa,
                                                ProductMapper productMapper) {
         return new ProductRepositoryImpl(productRepositoryJpa, productMapper);
+    }
+
+    @Bean
+    public EmailProducerService emailProducerService(ProductServiceRabbit productServiceRabbit){
+        return  new EmailProducerService(productServiceRabbit);
     }
 }
