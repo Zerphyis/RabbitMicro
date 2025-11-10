@@ -54,3 +54,25 @@ RabbitMicro-master/
 
 ---
 
+# 🧩 Tecnologias Utilizadas
+
+- **Java 17+**
+- **Spring Boot**
+- **RabbitMQ**
+- **Lombok**
+- **MapStruct** (mapeamento de DTOs)
+- **Maven**
+- **GitHub Actions** (CI/CD)
+
+---
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+- Java 17+
+- Maven 3.8+
+- RabbitMQ rodando localmente (porta padrão `5672`)
+
+### Passos
+
+
