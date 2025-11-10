@@ -8,4 +8,23 @@ Ele implementa **produção e consumo de mensagens** via filas RabbitMQ, aplican
 ---
 
 ## 🏗️ Estrutura do Projeto
-
+RabbitMicro-master/
+<br>
+├── src/main/java/dev/Zerphyis/microRabbitMq/
+<br>
+│ ├── Application/
+<br>
+│ │ ├── dto/ 
+<br>
+│ │ ├── mapper/ 
+<br>
+│ │ ├── services/
+<br>
+│ │ ├── useCases/
+<br>
+│ ├── MicroRabbitMqApplication.java 
+<br>
+├── pom.xml 
+<br>
+└── .github/workflows/ci.yml 
+<br>
