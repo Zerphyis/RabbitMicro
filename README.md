@@ -75,4 +75,36 @@ RabbitMicro-master/
 
 ### Passos
 
+#### 1. Clone o repositório:
+   ```bash
+   git clone https://github.com/Zerphyis/RabbitMicro.git
+   cd RabbitMicro-master
+````
+#### 2.Configure as credenciais do RabbitMQ em:
+````bash
+src/main/resources/application.properties
+````
+####  3.Execute o projeto:
+````bash
+mvn spring-boot:run
+````
+#### 4.Acesse:
+````bash
+http://localhost:8080
+````
+### 🧠 Conceitos Aplicados
+Clean Architecture: Separação clara entre camadas (DTO → Service → UseCase).
+<br>
+Event-Driven Architecture: Comunicação baseada em eventos.
+<br>
+Desacoplamento total: Cada módulo (usuário, produto, e-mail) pode operar de forma independente.
+<br>
+
+### 🧪 Testes
+Para rodar os testes automatizados:
+
+
+````bash
+mvn test
+````
 
